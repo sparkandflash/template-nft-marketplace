@@ -1,6 +1,6 @@
 ## Full stack NFT marketplace built with rinkeby, Solidity,  infura IPFS, & Next.js
 
-- https://e-waste-bc.vercel.app/
+- https://e-waste-bc.vercel.app/ - Running example
 
 
 this project uses ethers, chakra ui, nextjs. solidity NFT Marketplace contract.
