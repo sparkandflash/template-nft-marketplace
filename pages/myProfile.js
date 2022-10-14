@@ -210,7 +210,7 @@ import {
                 src={user.pfp}alt='Dan Abramov' />
               <Text fontSize='md'>{user.name}</Text>
               {
-                user.role ?  <Tag >citizen</Tag> : <Tag>user</Tag>
+                user.role ?  <Tag >creator</Tag> : <Tag>user</Tag>
               }
              
   
