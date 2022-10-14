@@ -1,0 +1,42 @@
+{
+    "name": "my-app",
+    "private": true,
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint"
+    },
+    "dependencies": {
+      "@chakra-ui/react": "^1.7.3",
+      "@emotion/react": "^11.7.0",
+      "@emotion/styled": "^11.6.0",
+      "@nomiclabs/hardhat-ethers": "^2.0.5",
+      "@nomiclabs/hardhat-waffle": "^2.0.3",
+      "@openzeppelin/contracts": "^4.5.0",
+      "@supabase/supabase-js": "^1.35.3",
+      "@walletconnect/web3-provider": "^1.7.8",
+      "axios": "^0.26.0",
+      "chai": "^4.3.6",
+      "ethereum-waffle": "^3.4.0",
+      "ethers": "^5.5.2",
+      "framer-motion": "^4.1.17",
+      "hardhat": "^2.8.4",
+      "ipfs-http-client": "^56.0.1",
+      "magic-sdk": "^8.1.1",
+      "next": "12.0.4",
+      "react": "17.0.2",
+      "react-dom": "17.0.2",
+      "react-web3-auth": "^0.2.1",
+      "ts-node": "^10.7.0",
+      "typescript": "^4.6.4",
+      "web3": "^1.6.1",
+      "web3modal": "^1.9.5"
+    },
+    "devDependencies": {
+      "autoprefixer": "^10.2.6",
+      "eslint": "7.32.0",
+      "eslint-config-next": "12.0.4"
+    }
+  }
+  
