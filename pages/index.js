@@ -5,7 +5,7 @@ import axios from 'axios'
 import Web3Modal from 'web3modal'
 import Header from '../components/Header';
 import { useRouter } from 'next/router'
-
+import { connectWallet, getCurrentWalletConnected } from "../utils/interact.js";
 import {
   marketplaceAddress
 } from '../config'
@@ -21,17 +21,17 @@ export default function Home() {
   const [walletAddress, setWallet] = useState("");
   const [buyTxn, setBuyTxn] = useState({ event: "", price: "", from: "", to: "", data: "", hash: "", tokenid: "" })
   async function viewTxn(tokenId) {
-    router.push(`https://rinkeby.etherscan.io/token/contract address=${tokenId}`)
+    router.push(`https://georli.etherscan.io/token/0x97e33fff71b84a8a6a483a925d437cd7294f009c?a=${tokenId}`)
   }
   async function checkNetwork() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
     const network = await provider.getNetwork();
     const chainId = network.chainId;
-    if (chainId != 4) {
+    if (chainId != 5) {
       addToast({
         title: "Alert!.",
-        description: "you are on wrong network, please connect to rinkeby network",
+        description: "you are on wrong network, please connect to goerli network",
         status: "warning",
         duration: 9000,
         isClosable: true,
@@ -39,14 +39,14 @@ export default function Home() {
     }
 
     else {
-      console.log("connected to rinkeby network, chainid : 4")
+      console.log("connected to goerli network, chainid : 5")
     }
 
 
   }
   async function loadNFTs() {
     try {
-      const provider = new ethers.providers.JsonRpcProvider("provider url like infura")
+      const provider = new ethers.providers.JsonRpcProvider("RPC provider URL")
 
       //   const provider = new ethers.providers.JsonRpcProvider("HTTP://local host ip")
 
@@ -85,7 +85,40 @@ export default function Home() {
 
     }
   }
-
+  /*  
+     async function newItem(items) {
+        
+               try {
+                 const res = await fetch(
+                   '/api/add-item',
+                   {
+                     body: JSON.stringify(items),
+                     headers: {
+                       'Content-Type': 'application/json'
+                     },
+                     method: 'POST',
+                     setTimeout: 10000
+                   }
+                 ).then(res => res.json())
+                   .then(data => {
+           
+                   
+           
+                     if (data == "success") {
+                     console.log("success")
+                     }
+                     else {
+                     console.log(data);
+                     
+                     };
+                   })
+               }
+               catch (ex) {
+                 console.log(ex)
+               }
+           
+             }
+ */
   async function buytxn() {
 
     try {
@@ -211,7 +244,8 @@ export default function Home() {
     checkNetwork();
     loadNFTs();
   }, [])
-  if (loadingState === 'loaded' && !nfts.length) return (<div><Header /><h1>No Items listed</h1></div>)
+  if (loadingState === 'loaded' && !nfts.length) return (<div><Header />  <Box padding={5}>
+  <Center> <Box rounded={6} width='max-content' border='1px' borderColor='gray.300' padding='15px' ><h1>No Items listed</h1></Box> </Center> </Box>  </div>)
 
   return (
     <div>
