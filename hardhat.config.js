@@ -16,10 +16,9 @@ module.exports = {
       accounts: [``]
     },
     */
-    rinkeby: {
+    georli: {
       url: "", //Infura url with projectId
-      accounts: [`PRIVATE-KEY`] // add the account that will deploy the contract (private key)
-     },
+      accounts: [`PRIVATE_KEY`] 
     /*
     matic: {
       // Infura
