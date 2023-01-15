@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-
+import * as IPFS from 'ipfs-core'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
@@ -9,29 +9,32 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
  import { useEffect, useState } from "react";
 
  import { connectWallet, getCurrentWalletConnected } from "../utils/interact.js";
- import { create as ipfsHttpClient } from 'ipfs-http-client'
+
  import { useRouter } from 'next/router';
- const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
+
  export default function Register() {
      const [fileUrl, setFileUrl] = useState(null)
      const [formInput, updateFormInput] = useState({ role: false, name: '', address: '' })
      const [uploading, setUploading] = useState(false)
      const [walletAdd, setWallet] = useState("");
-
+     const [user, setUser] = useState({ role: false, name: '', address: '' , fileUrl: '', wallet: '' });
      const [status, setStatus] = useState("");
      const router = useRouter()
  
      async function onChange(e) {
+      const node = await IPFS.create();
        setUploading(true);
          const file = e.target.files[0]
          try {
-             const added = await client.add(
-                 file,
-                 {
-                     progress: (prog) => console.log(`received: ${prog}`)
-                 }
-             )
-             const url = `https://ipfs.infura.io/ipfs/${added.path}`
+          const fileAdded = await node.add({
+            path: randomstring.generate(6),
+            progress: (prog) => console.log(`received: ${prog}`),
+            content: file
+        }
+        );
+
+        console.log("Added file:", fileAdded.path, fileAdded.cid.toString());
+        const url = `https://ipfs.io/ipfs/${fileAdded.cid.toString()}`
              setFileUrl(url)
              setUploading(false);
          } catch (error) {
@@ -87,8 +90,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
  
                 
  
-                     <Text color="blue.100" fontSize="2xl" fontWeight="bold" align="center">
-                         Hello citizen! <br/>
+                     <Text color="blue.100" fontSize="xl" fontWeight="bold" align="center">
+                         Hello user! <br/>
                          {walletAdd}
                      </Text>
                      <Center height='max-content'>
@@ -104,15 +107,19 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
                                  <Text color="blue.50" fontWeight="bold" mb='8px'>bio:</Text>
                                  <Textarea
  
-                                     placeholder="user address"
+                                     placeholder="bio"
  
                                      onChange={e => updateFormInput({ ...formInput, address: e.target.value })}
                                  />
                                  <Text color="blue.50" fontWeight="bold" mb='8px'>role:</Text>
-                                 <Checkbox onChange={() => updateFormInput({ ...formInput, role: true })}>citizen?</Checkbox>
+                                 <Checkbox onChange={() => updateFormInput({ ...formInput, role: true })}>I am creator</Checkbox>
                                
                                  <Box p={2} width='fit-content'>
-                                     <Text color="blue.50" fontWeight="bold" mb='8px'>upload file</Text>
+                                 <Button >add pfp</Button>
+            <Text color='gray.200' >Ipfs service is being set up, pfp upload may not function</Text>
+
+
+                                     <Text color="blue.50" fontWeight="bold" mb='8px'>upload pfp</Text>
                                      <Input
                                          type="file"
                                          name="Asset"
@@ -120,6 +127,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
                                          onChange={onChange}
                                      />
                                      <Text color="blue.50" fontWeight="bold" mb='8px'>user pfp:</Text>
+
+
                                      
                                  </Box>
  
