@@ -1,7 +1,8 @@
 ## Full stack NFT marketplace built with rinkeby, Solidity,  infura IPFS, & Next.js
 
-# [Not updated post merge]
-- https://e-waste-bc.vercel.app/ - Running example
+# [IPFS function is unavilable]
+- the ifura gateways i used were free ones, now they are no longer free :/ I'm in process of setting up an alternative.
+- https://g-nft-mrkt.sparkandflash.art/ - Running example
 
 
 this project uses ethers, chakra ui, nextjs. solidity NFT Marketplace contract.
