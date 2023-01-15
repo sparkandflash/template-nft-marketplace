@@ -15,7 +15,7 @@ required softwares:
 - nodejs 
 - vs code
 - ganche (optional) 
-- metamaask preinstalled and set up on chrome/mozilla/brave browser on desktop, this project is not optmised for smartphones. it might work to some extent on opera crypto browser on tablets. obtain rinkeby tokens from https://faucet.rinkeby.io/ or https://rinkebyfaucet.com/. 
+- metamaask preinstalled and set up on chrome/mozilla/brave browser on desktop, this project is not optmised for smartphones. it might work to some extent on opera crypto browser on tablets. obtain Goerli tokens. 
 
 
 clone this repo on vs code and open the folder of the extracted site
@@ -35,7 +35,7 @@ npm install
 
 ```
 
-2. Start the local Hardhat node (this contract is already deployed on rinkeby network, confirm network setting in hardhat config file before deploying to localhost)
+2. Start the local Hardhat node (this contract is already deployed on Goerli network, confirm network setting in hardhat config file before deploying to localhost)
 
 ```sh
 npx hardhat node
@@ -51,7 +51,7 @@ npx hardhat run scripts/deploy.js --network localhost
 ```
 if deploying to other networks: 
 ```sh
-npx hardhat run scripts/deploy.js --network name(rinbkeby/mumbai/mainnet/matic/ganache) 
+npx hardhat run scripts/deploy.js --network name(Goerli/mumbai/mainnet/matic/ganache) 
 ```
 
 4. Start the app (verify rpc url, its different for local host and other networks ) 
