@@ -1,4 +1,4 @@
-## Full stack NFT marketplace built with rinkeby, Solidity,  infura IPFS, & Next.js
+## Full stack NFT marketplace built with Goerli, Solidity,  infura IPFS, & Next.js
 
 # [IPFS function is unavilable]
 - the infura gateways i used were free ones, now they are no longer free :/ I'm in process of setting up an alternative.
