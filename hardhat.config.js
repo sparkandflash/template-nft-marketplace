@@ -19,6 +19,7 @@ module.exports = {
     georli: {
       url: "", //Infura url with projectId
       accounts: [`PRIVATE_KEY`] 
+    },
     /*
     matic: {
       // Infura
