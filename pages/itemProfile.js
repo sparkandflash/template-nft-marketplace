@@ -1,3 +1,19 @@
+import Header from '../components/Header';
+import {
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  Spacer,
+  useDisclosure,
+  Modal,
+  Center,
+  ModalCloseButton, Text, Container, Box, Button, Image
+} from "@chakra-ui/react";
+import { ethers } from 'ethers';
+import axios from 'axios'
+
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
 import ResellNFT from '../components/ResellNft';
@@ -15,7 +31,7 @@ export default function ItemProfile() {
   const [waiting, setWaiting] = useState(false);
   const [nft, setNft] = useState([])
   const [resellItem, setResellItem] = useState(true)
-
+  const [recevier, setRecevier] = useState([])
   const { id, tokenURI } = router.query
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -36,7 +52,7 @@ export default function ItemProfile() {
   }
 
   async function viewTxn(tokenId) {
-    router.push(`https://rinkeby.etherscan.io/token/-contract-address?a=${tokenId}`)
+    router.push(`https://georli.etherscan.io/token/0x97e33fff71b84a8a6a483a925d437cd7294f009c?a=${tokenId}`)
   }
 
   async function loadNFTs() {
