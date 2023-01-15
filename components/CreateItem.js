@@ -1,12 +1,12 @@
 import { Textarea, Input, Button, Image, VStack, Text, Box, Center } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
+var randomstring = require("randomstring");
 import { ethers } from 'ethers'
-import { create as ipfsHttpClient } from 'ipfs-http-client'
+
 import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
-
-const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
+import * as IPFS from 'ipfs-core'
+// const client = ipfsHttpClient('https://api.filebase.io/v1/ipfs')
 
 import {
     marketplaceAddress
@@ -14,30 +14,38 @@ import {
 
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
 
+
+
 function CreateItem() {
+  //  const [fileName, setFileName] = useState("")
     const [uploading, setUploading] = useState(false)
     const [fileUrl, setFileUrl] = useState(null)
     const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
     const router = useRouter()
 
     async function onChange(e) {
+        const node = await IPFS.create();
         setUploading(true);
         const file = e.target.files[0]
         try {
-            const added = await client.add(
-                file,
-                {
-                    progress: (prog) => console.log(`received: ${prog}`)
-                }
-            )
-            const url = `https://ipfs.infura.io/ipfs/${added.path}`
+            const fileAdded = await node.add({
+                path: randomstring.generate(6),
+                progress: (prog) => console.log(`received: ${prog}`),
+                content: file
+            }
+            );
+
+            console.log("Added file:", fileAdded.path, fileAdded.cid.toString());
+            const url = `https://ipfs.io/ipfs/${fileAdded.cid.toString()}`
             setFileUrl(url)
             setUploading(false);
         } catch (error) {
             console.log('Error uploading file: ', error)
+
         }
     }
     async function uploadToIPFS() {
+        const node = await IPFS.create();
         const { name, description, price } = formInput
         if (!name || !description || !price || !fileUrl) return
         /* first, upload to IPFS */
@@ -45,9 +53,14 @@ function CreateItem() {
             name, description, image: fileUrl
         })
         try {
-            const added = await client.add(data)
-            const url = `https://ipfs.infura.io/ipfs/${added.path}`
-            /* after file is uploaded to IPFS, return the URL to use it in the transaction */
+            const fileAdded = await node.add({
+                path: randomstring.generate(6),
+                progress: (prog) => console.log(`received: ${prog}`),
+                content: data
+            }
+            );
+            console.log("Added file:", fileAdded.path, fileAdded.cid.toString());
+            const url = `https://ipfs.io/ipfs/${fileAdded.cid.toString()}`
 
             return url
         } catch (error) {
@@ -75,9 +88,9 @@ function CreateItem() {
 
             const receipt = await transaction.wait()
             console.log(receipt)
-          //get hash first then obtain receipt from it, then get token id
-          console.log(transaction.hash);
-          console.log(transaction.logs);
+            //get hash first then obtain receipt from it, then get token id
+            console.log(transaction.hash);
+            console.log(transaction.logs);
         }
         catch (err) {
             console.log(err)
@@ -96,7 +109,7 @@ function CreateItem() {
 
 
                 <Text color="blue.100" fontSize="2xl" fontWeight="bold" align="center">
-                    Hello user!
+                    Hello citizen!
                 </Text>
                 <Center height='max-content'>
                     <VStack>
